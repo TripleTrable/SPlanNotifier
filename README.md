@@ -7,7 +7,20 @@ Description
 
 A simple parser and notifier for starplaner timetables.
 
+Important:
+----------
 
+the URL needs to have the following '&m=getTT' appended
+
+
+Usage:
+------
+
+Currently only supports:
+
+```
+splanNotify -v url
+```
 
 
 TODO:
@@ -18,8 +31,12 @@ TODO:
  - [ ] -c push only changed notifications
  - [ ] -n push only next lectures
 
- - [ ] optimise
- - [ ] convert shell script to c program
+ - [ ] Automaticly convert URL
+
+ - [ ] Optimise
+ - [ ] Convert shell script to c program
+ - [ ] Add `make install`
+ - [ ] Add packman package support
 
 
 
