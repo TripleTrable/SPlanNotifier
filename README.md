@@ -29,7 +29,7 @@ TODO:
 -----
 
  - [X] -v push notifications for all lectures
- - [ ] -q show no notifications
+ - [X] -q show no notifications
  - [ ] -c push only changed notifications
  - [ ] -n push only next lectures
 
