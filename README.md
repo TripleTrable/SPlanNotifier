@@ -32,6 +32,7 @@ TODO:
  - [ ] -n push only next lectures
 
  - [X] Automaticly convert URL
+ - [ ] Add stdout support
 
  - [ ] Optimise
  - [ ] Convert shell script to c program
