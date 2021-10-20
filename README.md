@@ -7,11 +7,6 @@ Description
 
 A simple parser and notifier for starplaner timetables.
 
-Important:
-----------
-
-the URL needs to have the following '&m=getTT' appended
-
 
 Usage:
 ------
