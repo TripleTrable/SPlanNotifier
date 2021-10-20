@@ -17,6 +17,13 @@ Currently only supports:
 splanNotify -v url
 ```
 
+Dependencies:
+-------------
+
+ - curl
+ - awk
+ - notify-send
+
 
 TODO:
 -----
