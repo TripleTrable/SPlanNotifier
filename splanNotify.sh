@@ -63,7 +63,9 @@ storedTime="timeTable"
 storedLecture="lectureTable"
 imageFile="$(pwd)/th-rosenheim-logo-klein.png"
 notCompare=""
+url="${url}&m=getTT"
 curlData=$(curl -s "${url}" | sed "s/></>\n</g")
+
 
 # check directories and files
 if [ -z "${XDG_CACHE_HOME}" ]; then

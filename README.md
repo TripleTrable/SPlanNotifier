@@ -31,7 +31,7 @@ TODO:
  - [ ] -c push only changed notifications
  - [ ] -n push only next lectures
 
- - [ ] Automaticly convert URL
+ - [X] Automaticly convert URL
 
  - [ ] Optimise
  - [ ] Convert shell script to c program
