@@ -11,9 +11,10 @@ with no URL, or when URL is -, read standard input.
   -h            shows this help page
   -v            notifications for all lectures
   -q            no notifications even on change
+  -n            notification for next lecture
 EOF
 
-while getopts "hvq" opt; do
+while getopts "hvqn" opt; do
   case "$opt" in
     h)
       echo "${usage}"
@@ -22,6 +23,8 @@ while getopts "hvq" opt; do
     v)  verbose="y"
       ;;
     q)  quiet="y"
+      ;;
+    n)  nextLecture="y"
       ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
@@ -95,8 +98,30 @@ if [ -z ${notCompare}]; then
     :
 fi
 
+if [ ! -z ${nextLecture} ]; then
+    while read line; do 
+        dt1="$(echo "${line}" | awk -F\; 'match($0, /([0-1]?[0-9]|2[0-3]):[0-5][0-9]/, a) {print $1 " " a[0]}'):00"
+        t1=$(date --date="${dt1}" +%s)
+
+        dt2=$(date +%Y-%m-%d\ %H:%M:%S)
+        t2=$(date --date="$dt2" +%s)
+
+        let "tDiff=$t1-$t2"
+        
+        if [ ${tDiff} -gt 0 ] && ([ -z ${nextTime} ] || [ ${tDiff} -eq ${nextTime} ]); then 
+            if [ -z ${Notifications} ]; then
+                Notifications="${line}" 
+            else
+                Notifications="${Notifications}"$'\n'"${line}" 
+            fi
+            nextTime=${tDiff}
+        fi
+        # echo $(echo "${line}" | awk -F\; '{print "$2" "$3"}') 
+    done < <(echo "${curlData}" | ./ttParser -d )
+
+fi
 if [ ! -z ${verbose} ]; then
-   Notifications=$(echo "${curlData}" | ./ttParser -d )
+    Notifications=$(echo "${curlData}" | ./ttParser -d )
 fi
 
 
@@ -104,9 +129,6 @@ fi
 
 if [ -z ${quiet} ]; then
     while read line; do 
-        if [ ! -z ${verbose} ]; then
             notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
-        fi
-        # echo $(echo "${line}" | awk -F\; '{print "$2" "$3"}') 
     done < <(echo "${Notifications}")
 fi

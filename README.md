@@ -31,7 +31,7 @@ TODO:
  - [X] -v push notifications for all lectures
  - [X] -q show no notifications
  - [ ] -c push only changed notifications
- - [ ] -n push only next lectures
+ - [X] -n push only next lectures
 
  - [X] Automaticly convert URL
  - [ ] Add stdout support
