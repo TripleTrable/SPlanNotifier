@@ -32,6 +32,7 @@ TODO:
  - [X] -q show no notifications
  - [ ] -c push only changed notifications
  - [X] -n push only next lectures
+ - [ ] -o print notifications to stdout
 
  - [X] Automaticly convert URL
  - [ ] Add stdout support
