@@ -12,9 +12,10 @@ with no URL, or when URL is -, read standard input.
   -v            notifications for all lectures
   -q            no notifications even on change
   -n            notification for next lecture
+  -o            prints notifications to stdout
 EOF
 
-while getopts "hvqn" opt; do
+while getopts "hvqno" opt; do
   case "$opt" in
     h)
       echo "${usage}"
@@ -25,6 +26,8 @@ while getopts "hvqn" opt; do
     q)  quiet="y"
       ;;
     n)  nextLecture="y"
+      ;;
+    o)  outStd="y"
       ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
@@ -129,6 +132,10 @@ fi
 
 if [ -z ${quiet} ]; then
     while read line; do 
+        if [ -z ${outStd} ]; then
             notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
+        else
+            echo "${line}"
+        fi
     done < <(echo "${Notifications}")
 fi
