@@ -475,7 +475,6 @@ int main(int argc, const char* argv[])
             char* buffer = malloc(size+1);
             memcpy(buffer,posStart,size);
             buffer[size] = '\0';
-            
             datePosMap[dateIter] = malloc(sizeof(DateEntry));
             datePosMap[dateIter]->pos = atoi(buffer);
            
@@ -514,17 +513,18 @@ int main(int argc, const char* argv[])
             
             pos++;
             
-            for(int i= 0; i < 7;i++)
+            uint8_t lastfit = 0;
+            if(printDate)
             {
-                if(datePosMap[i] != NULL)
-                    if(datePosMap[i]->pos <= pos)
-                        if(printDate)
-                        {
-                            printf("%s",datePosMap[i]->date);
-                            break;
-                        }
+                for(uint8_t i = 0; i < 7;i++)
+                {
+                    if(datePosMap[i] != NULL && pos >= datePosMap[i]->pos)
+                    {
+                        lastfit = i;
+                    }
+                }
+                printf("%s",datePosMap[lastfit]->date);
             }
-
             free(buffer);
 
         }else if(strstr(line,"/div") && print)
@@ -537,6 +537,14 @@ int main(int argc, const char* argv[])
 
         }
     }
+
+//            DateEntry* iter = datePosMap[0];
+//            int i = 0;
+//            while(iter)
+//            {
+//                printf("item %d:\t%s\tat\t%d\n",i++,iter->date,iter->pos);
+//                iter = datePosMap[i];
+//            }
 
     //fclose(fp);
     if (line)
