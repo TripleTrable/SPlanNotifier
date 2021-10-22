@@ -72,6 +72,7 @@ TODO:
 
  - [X] Automaticly convert URL
  - [X] Add stdout support
+ - [ ] Rollover to next week on Friday
 
  - [ ] Optimise
  - [ ] Convert shell script to c program
