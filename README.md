@@ -11,11 +11,46 @@ A simple parser and notifier for starplaner timetables.
 Usage:
 ------
 
-Currently only supports:
+
+__Note:__
+
+- Ether pass the URL via stdin or as the last argument
+- for all options you can add -o to change the output to stdout
+
+__Example:__
+
+- Help:
 
 ```
-splanNotify -v url
+splanNotify -h
 ```
+
+
+- Show all lectures:
+
+```
+splanNotify -v
+```
+
+
+- Just update cache:
+
+```
+splanNotify -q
+```
+
+- Show changes since last run:
+
+```
+splanNotify -c
+```
+
+- Show next lecture:
+
+```
+splanNotify -n
+```
+
 
 Dependencies:
 -------------
