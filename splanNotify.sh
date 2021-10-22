@@ -1,5 +1,5 @@
 #!/bin/sh
-
+shopt -s extglob
 
 # handle parameters and flags
 read -d '' usage << EOF
@@ -9,13 +9,16 @@ Notify at change of timetable(from StarPlan)
 with no URL, or when URL is -, read standard input.
 
   -h            shows this help page
-  -v            notifications for all lectures
   -q            no notifications even on change
-  -n            notification for next lecture
+  -v            notifications for all lectures
+  -n            notifications for next lecture
+  -c            notifications for changes since last run
   -o            prints notifications to stdout
+
+NOTE: when used first, there is no output for -c
 EOF
 
-while getopts "hvqno" opt; do
+while getopts "hvqnoc" opt; do
   case "$opt" in
     h)
       echo "${usage}"
@@ -28,6 +31,8 @@ while getopts "hvqno" opt; do
     n)  nextLecture="y"
       ;;
     o)  outStd="y"
+      ;;
+    c)  showDiff="y"
       ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
@@ -82,23 +87,55 @@ fi
 
 if [ ! -d "${dataDir}" ]; then
     mkdir -p "${dataDir}"
-    notCompare="true"
 fi
 
 if [ ! -f "${dataDir}/${storedLecture}" ]; then
-    LectureTT=$(echo $(curlData) | ./ttParser )
-    echo ${LectureTT} > "${dataDir}/${storedLecture}"
-    notCompare="true"
+    LectureTT=$(echo "${curlData}" | ./ttParser )
+    echo "${LectureTT}" > "${dataDir}/${storedLecture}"
 fi
 
 if [ ! -f "${dataDir}/${storedTime}" ]; then
-    LectureTT=$(echo $(curlData) | ./ttParser -d )
-    echo ${timeTable} > "${dataDir}/${storedTime}"
-    notCompare="true"
+    timeTable=$(echo "${curlData}" | ./ttParser -d )
+    echo "${timeTable}" > "${dataDir}/${storedTime}"
 fi
 
-if [ -z ${notCompare}]; then
-    :
+if [ ! -z ${showDiff} ]; then
+    diffParse=$(echo "${curlData}" | ./ttParser -d)
+    diffRes=$(diff  <(echo "${diffParse}") <(cat "${dataDir}/${storedTime}"))
+
+#    echo "${diffRes}"
+    while read line; do
+
+        case "$line" in
+            +([0-9])[acd]+([0-9])   ) diffType="${line}";;    # matches "met" or "meet"
+
+            "<"*) #TODO: send Notify
+                lineNr=$(echo "${diffType}" | grep -oE ^[0-9]+)
+                line=$(echo "${diffParse}" | awk -v ind="${lineNr}" '(NR == ind) {print $0}')
+                if [ -z ${outStd} ]; then
+                    notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print "New:" $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
+                else
+                    echo "NEW;${line}"
+                fi
+                ;;
+            ">"*) #TODO: send Notify
+                lineNr=$(echo "${diffType}" | grep -oE ^[0-9]+)
+                line=$(cat "${dataDir}/${storedTime}" | awk -v ind="${lineNr}" '(NR == ind) {print $0}')
+                if [ -z ${outStd} ]; then
+                    notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print "Canceled": $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
+                else
+                    echo "CANCELED:${line}"
+                fi
+                ;;
+        esac
+
+    done < <(echo "${diffRes}")
+    
+    LectureTT=$(echo "${curlData}" | ./ttParser )
+    echo "${LectureTT}" > "${dataDir}/${storedLecture}"
+    timeTable=$(echo "${curlData}" | ./ttParser -d )
+    echo "${timeTable}" > "${dataDir}/${storedTime}"
+    exit
 fi
 
 if [ ! -z ${nextLecture} ]; then

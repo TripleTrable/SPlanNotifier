@@ -23,6 +23,7 @@ Dependencies:
  - curl
  - awk
  - notify-send
+ - grep
 
 
 TODO:
@@ -30,12 +31,12 @@ TODO:
 
  - [X] -v push notifications for all lectures
  - [X] -q show no notifications
- - [ ] -c push only changed notifications
+ - [X] -c push only changed notifications
  - [X] -n push only next lectures
  - [X] -o print notifications to stdout
 
  - [X] Automaticly convert URL
- - [ ] Add stdout support
+ - [X] Add stdout support
 
  - [ ] Optimise
  - [ ] Convert shell script to c program
