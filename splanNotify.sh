@@ -99,7 +99,7 @@ if [ ! -f "${dataDir}/${storedTime}" ]; then
     echo "${timeTable}" > "${dataDir}/${storedTime}"
 fi
 
-if [ ! -z ${showDiff} ]; then
+if [ ! -z "${showDiff}" ]; then
     diffParse=$(echo "${curlData}" | ./ttParser -d)
     diffRes=$(diff  <(echo "${diffParse}") <(cat "${dataDir}/${storedTime}"))
 
@@ -138,7 +138,7 @@ if [ ! -z ${showDiff} ]; then
     exit
 fi
 
-if [ ! -z ${nextLecture} ]; then
+if [ ! -z "${nextLecture}" ]; then
     while read line; do 
         dt1="$(echo "${line}" | awk -F\; 'match($0, /([0-1]?[0-9]|2[0-3]):[0-5][0-9]/, a) {print $1 " " a[0]}'):00"
         t1=$(date --date="${dt1}" +%s)
@@ -149,7 +149,7 @@ if [ ! -z ${nextLecture} ]; then
         let "tDiff=$t1-$t2"
         
         if [ ${tDiff} -gt 0 ] && ([ -z ${nextTime} ] || [ ${tDiff} -eq ${nextTime} ]); then 
-            if [ -z ${Notifications} ]; then
+            if [ -z "${Notifications}" ]; then
                 Notifications="${line}" 
             else
                 Notifications="${Notifications}"$'\n'"${line}" 
@@ -160,16 +160,16 @@ if [ ! -z ${nextLecture} ]; then
     done < <(echo "${curlData}" | ./ttParser -d )
 
 fi
-if [ ! -z ${verbose} ]; then
+if [ ! -z "${verbose}" ]; then
     Notifications=$(echo "${curlData}" | ./ttParser -d )
 fi
 
 
 # print stuff:
 
-if [ -z ${quiet} ]; then
+if [ -z "${quiet}" ]; then
     while read line; do 
-        if [ -z ${outStd} ]; then
+        if [ -z "${outStd}" ]; then
             notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
         else
             echo "${line}"
