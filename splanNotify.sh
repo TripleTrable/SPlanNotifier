@@ -14,11 +14,12 @@ with no URL, or when URL is -, read standard input.
   -n            notifications for next lecture
   -c            notifications for changes since last run
   -o            prints notifications to stdout
+  -N            notifications for next week
 
 NOTE: when used first, there is no output for -c
 EOF
 
-while getopts "hvqnoc" opt; do
+while getopts "hvqnocN" opt; do
   case "$opt" in
     h)
       echo "${usage}"
@@ -34,9 +35,11 @@ while getopts "hvqnoc" opt; do
       ;;
     c)  showDiff="y"
       ;;
+    N)  nextWeek="y"
+      ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
-      echo ${usage} >&2
+      echo "${usage}" >&2
       exit 1
       ;;
     :)
@@ -75,6 +78,12 @@ storedLecture="lectureTable"
 imageFile="$(pwd)/th-rosenheim-logo-klein.png"
 notCompare=""
 url="${url}&m=getTT"
+
+if [ ! -z "${nextWeek}" ]; then
+    url="${url}&dfc=$(date -d 'next monday' +"%Y-%m-%d")"
+fi
+
+
 curlData=$(curl -s "${url}" | sed "s/></>\n</g")
 
 

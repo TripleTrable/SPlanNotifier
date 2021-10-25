@@ -70,7 +70,7 @@ TODO:
  - [X] -c push only changed notifications
  - [X] -n push only next lectures
  - [X] -o print notifications to stdout
- - [ ] -N Shows next week
+ - [X] -N Shows next week
 
  - [X] Automaticly convert URL
  - [X] Add stdout support
