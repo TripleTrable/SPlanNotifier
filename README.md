@@ -15,7 +15,8 @@ Usage:
 __Note:__
 
 - Ether pass the URL via stdin or as the last argument
-- for all options you can add -o to change the output to stdout
+- For date independent usage uncheck the `Date` checkbox or remove '&dfc=2021-10-25' from the link
+- For all options you can add -o to change the output to stdout
 
 __Example:__
 
@@ -69,6 +70,7 @@ TODO:
  - [X] -c push only changed notifications
  - [X] -n push only next lectures
  - [X] -o print notifications to stdout
+ - [ ] -N Shows next week
 
  - [X] Automaticly convert URL
  - [X] Add stdout support
