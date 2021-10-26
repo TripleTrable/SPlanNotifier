@@ -19,7 +19,9 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/splanNotifyer $(DESTDIR)$(PREFIX)/bin/ttParser
 	rm -f $(DESTDIR)$(MANPREFIX)/man1/splanNotifyer.1
 
+ttParser: bin/ttParser
+
 bin/ttParser: src/ttParser.c
 	$(CC) $^ -o $@
 
-.PHONY: install uninstall
+.PHONY: install uninstall ttParser
