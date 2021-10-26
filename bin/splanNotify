@@ -104,17 +104,17 @@ if [ ! -d "${dataDir}" ]; then
 fi
 
 if [ ! -f "${dataDir}/${storedLecture}" ]; then
-    LectureTT=$(echo "${curlData}" | ./ttParser )
+    LectureTT=$(echo "${curlData}" | ttParser )
     echo "${LectureTT}" > "${dataDir}/${storedLecture}"
 fi
 
 if [ ! -f "${dataDir}/${storedTime}" ]; then
-    timeTable=$(echo "${curlData}" | ./ttParser -d )
+    timeTable=$(echo "${curlData}" | ttParser -d )
     echo "${timeTable}" > "${dataDir}/${storedTime}"
 fi
 
 if [ ! -z "${showDiff}" ]; then
-    diffParse=$(echo "${curlData}" | ./ttParser -d)
+    diffParse=$(echo "${curlData}" | ttParser -d)
     diffRes=$(diff  <(echo "${diffParse}") <(cat "${dataDir}/${storedTime}"))
 
 #    echo "${diffRes}"
@@ -145,9 +145,9 @@ if [ ! -z "${showDiff}" ]; then
 
     done < <(echo "${diffRes}")
     
-    LectureTT=$(echo "${curlData}" | ./ttParser )
+    LectureTT=$(echo "${curlData}" | ttParser )
     echo "${LectureTT}" > "${dataDir}/${storedLecture}"
-    timeTable=$(echo "${curlData}" | ./ttParser -d )
+    timeTable=$(echo "${curlData}" | ttParser -d )
     echo "${timeTable}" > "${dataDir}/${storedTime}"
     exit
 fi
@@ -171,11 +171,11 @@ if [ ! -z "${nextLecture}" ]; then
             nextTime=${tDiff}
         fi
         # echo $(echo "${line}" | awk -F\; '{print "$2" "$3"}') 
-    done < <(echo "${curlData}" | ./ttParser -d )
+    done < <(echo "${curlData}" | ttParser -d )
 
 fi
 if [ ! -z "${verbose}" ]; then
-    Notifications=$(echo "${curlData}" | ./ttParser -d )
+    Notifications=$(echo "${curlData}" | ttParser -d )
 fi
 
 
