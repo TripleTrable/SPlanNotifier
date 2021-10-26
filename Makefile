@@ -11,7 +11,7 @@ install: bin/ttParser
 	cp -f bin/splan-notify bin/ttParser $(DESTDIR)$(PREFIX)/bin/
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/splan-notify $(DESTDIR)$(PREFIX)/bin/splanNotify
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
-	cp -f splan-notify.1 $(DESTDIR)$(MANPREFIX)/man1/splanNotify.1
+	cp -f splan-notify.1 $(DESTDIR)$(MANPREFIX)/man1/splan-notify.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/splan-notify.1
 
 
