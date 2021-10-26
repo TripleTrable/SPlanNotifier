@@ -8,18 +8,19 @@ Notify at change of timetable(from StarPlan)
 
 with no URL, or when URL is -, read standard input.
 
-  -h            shows this help page
-  -q            no notifications even on change
-  -v            notifications for all lectures
-  -n            notifications for next lecture
-  -c            notifications for changes since last run
-  -o            prints notifications to stdout
-  -N            notifications for next week
+  -h                shows this help page
+  -q                no notifications even on change
+  -v                notifications for all lectures
+  -n                notifications for next lecture
+  -c                notifications for changes since last run
+  -o                prints notifications to stdout
+  -N                notifications for next week
+  -p <Path to img>  absolute path to image to display in Notification
 
 NOTE: when used first, there is no output for -c
 EOF
 
-while getopts "hvqnocN" opt; do
+while getopts "hvqnocNp:" opt; do
   case "$opt" in
     h)
       echo "${usage}"
@@ -36,6 +37,8 @@ while getopts "hvqnocN" opt; do
     c)  showDiff="y"
       ;;
     N)  nextWeek="y"
+      ;;
+    p)  imagePath="${OPTARG}"
       ;;
     \?)
       echo "Invalid option: -${OPTARG}" >&2
@@ -75,7 +78,9 @@ fi
 
 storedTime="timeTable"
 storedLecture="lectureTable"
-imageFile="$(pwd)/th-rosenheim-logo-klein.png"
+if [ ! -z "${imagePath}" ]; then
+    imageFile="${imagePath}"
+fi
 notCompare=""
 url="${url}&m=getTT"
 

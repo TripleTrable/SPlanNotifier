@@ -59,6 +59,13 @@ splanNotify -n
 splanNotify -N
 ```
 
+- add image to notification (needs absolute path):
+
+```
+splanNotify -p <path>
+```
+
+
 Dependencies:
 -------------
 
