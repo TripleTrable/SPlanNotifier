@@ -8,7 +8,7 @@ endif
 
 install: bin/ttParser
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f bin/splanNotify bin/ttParser $(DESTIR)$(PREFIX)/bin/
+	cp -f bin/splanNotify bin/ttParser $(DESTDIR)$(PREFIX)/bin/
 	chmod 755 $(DESTDIR)$(PREFIX)/bin/splanNotify $(DESTDIR)$(PREFIX)/bin/spanNotify
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
 	cp -f splanNotify.1 $(DESTDIR)$(MANPREFIX)/man1/splanNotify.1
