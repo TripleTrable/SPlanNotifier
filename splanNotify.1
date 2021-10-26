@@ -1,0 +1,33 @@
+.TH SPLANNOTIFYER 1 splanNotifyer
+.SH NAME
+splanNotifyer \- create notifications from starplaner url
+.SH SYNOPSIS
+.B splanNotify
+[
+.I OPTIONS
+]
+.SH DESCRIPTION
+.B splanNotifyer
+takes starplaner url and generates notification
+.SH COMMANDS
+.TP
+.B -q
+runs without any output (usefull for updating caches without any output)
+.TP
+.B -v
+show notification for every lecture/event
+.TP
+.B -n
+show notification for only the next lecture/event
+.TP
+.B -c
+show notification for all changes since the last run of -c
+.TP
+.B -o
+write to stdout instead of pushing notifications
+.TP
+.B -N
+show notifications for the coming week
+.TP
+.B -p /home/alice/logo.png
+show logo.png inside the notifications
