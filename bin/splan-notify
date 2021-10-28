@@ -136,7 +136,7 @@ if [ ! -z "${showDiff}" ]; then
                 lineNr=$(echo "${diffType}" | grep -oE ^[0-9]+)
                 line=$(cat "${dataDir}/${storedTime}" | awk -v ind="${lineNr}" '(NR == ind) {print $0}')
                 if [ -z ${outStd} ]; then
-                    notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print "Canceled": $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
+                    notify-send -i "${imageFile}" "$(echo ${line} | awk -F\; '{print "Canceled:" $2}' | cut -d, -f1)" "$(echo ${line} | awk -F\; '{printf $1 " " $6 "\072 " $3 " @ " $5}')"
                 else
                     echo "CANCELED:${line}"
                 fi
