@@ -85,6 +85,10 @@ TODO:
  - [X] -o print notifications to stdout
  - [X] -N Shows next week
 
+
+ - [X] Fix shopt for posix compliance
+
+
  - [X] Automaticly convert URL
  - [X] Add stdout support
 
